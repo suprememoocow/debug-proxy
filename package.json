@@ -1,0 +1,28 @@
+{
+  "name": "debug-proxy",
+  "version": "0.1.0",
+  "description": "Client side proxy for visionmedia/debug to allow delayed loading",
+  "main": "sync-debug.js",
+  "browser": "async-debug.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/suprememoocow/debug-proxy.git"
+  },
+  "keywords": [
+    "debug",
+    "browser",
+    "client-side"
+  ],
+  "author": "Andrew Newdigate <andrewn@datatribe.net> (http://about.me/andrewnewdigate)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/suprememoocow/debug-proxy/issues"
+  },
+  "homepage": "https://github.com/suprememoocow/debug-proxy#readme",
+  "dependencies": {
+    "debug": "^2.2.0"
+  }
+}
