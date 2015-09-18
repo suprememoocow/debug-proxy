@@ -1,13 +1,12 @@
-/* jshint browser:true, node:true */
+/* jshint browser:true, node:true, unused:true */
 'use strict';
 
 var loading = false;
-var loaded = false;
 var listeners = [];
 var debug;
 
 function enableDebugging() {
-  var loading = true;
+  loading = true;
   require.ensure(['debug'], function(require) {
     debug = require('debug');
     listeners.forEach(function(listener) {
@@ -37,26 +36,38 @@ try {
   }
 } catch(e) { }
 
-module.exports = function debugProxy(namespace) {
+function debugProxy(namespace) {
   var backend;
 
-  if (debug) {
-    return debug(namespace);
-  }
-
-  listeners.push(function() {
-    backend = debug(namespace);
-  });
-
-  return function() {
+  var fn = function() {
     if (backend) {
+      // Backend is loaded, just use it
       backend.apply(backend, arguments);
     } else if(loading) {
       // Backend is loading, defer the debug call until it is loaded
       var args = Array.prototype.slice.apply(arguments);
       listeners.push(function() {
-        backend.apply(backend, arguments);
+        backend.apply(backend, args);
       });
     }
   };
+
+  listeners.push(function() {
+    // Backend has been loaded, switch to it
+    backend = debug(namespace);
+    fn.enabled = backend.enabled;
+  });
+
+  fn.enabled = loading; // Technically this isn't totally correct as debug may filter
+                        // this level out once the backend has started
+
+  return fn;
+}
+
+module.exports = function(namespace) {
+  if (debug) {
+    return debug(namespace);
+  }
+
+  return debugProxy(namespace);
 };
