@@ -16,22 +16,8 @@ function enableDebugging() {
   });
 }
 
-window.__enableDebugging = function() {
-  try {
-    window.localStorage.debug_logging = true;
-  } catch(e) { }
-
-  enableDebugging();
-};
-
-window.__disableDebugging = function() {
-  try {
-    delete window.localStorage.debug_logging;
-  } catch(e) { }
-};
-
 try {
-  if(window.localStorage.debug_logging) {
+  if(window.localStorage.debug) {
     enableDebugging();
   }
 } catch(e) { }
