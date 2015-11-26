@@ -1,6 +1,6 @@
 {
   "name": "debug-proxy",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Client side proxy for visionmedia/debug to allow delayed loading",
   "main": "sync-debug.js",
   "browser": "async-debug.js",
